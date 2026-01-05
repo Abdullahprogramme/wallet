@@ -19,10 +19,23 @@ connectDB();
 
 const PORT = Number(process.env.PORT) || 5000;
 
+
 // Initialize Express app
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+// Response time logging middleware
+app.use((req, res, next) => {
+  const start = Date.now();
+  res.on('finish', () => {
+    const duration = Date.now() - start;
+    if (duration > 500) { // Log only slow requests (>500ms)
+      console.warn(`[SLOW REQUEST] ${req.method} ${req.originalUrl} - ${duration}ms`);
+    }
+  });
+  next();
+});
 
 // Define routes
 app.get("/", (_, res) => res.send("API Running"));
