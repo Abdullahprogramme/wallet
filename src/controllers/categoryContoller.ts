@@ -11,7 +11,7 @@ export const createCategory = async (req: AuthRequest, res: Response) => {
 
         res.json(category);
     } catch (err) {
-        res.status(500).json({ error: err });
+        res.status(500).json({ error: "Server error" });
     }
 };
 
@@ -20,7 +20,7 @@ export const getCategories = async (req: AuthRequest, res: Response) => {
         const categories = await Category.find({ userId: req.user });
         res.json(categories);
     } catch (err) {
-        res.status(500).json({ error: err });
+        res.status(500).json({ error: "Server error" });
     }
 };
 
@@ -36,6 +36,6 @@ export const deleteCategory = async (req: AuthRequest, res: Response) => {
         }
         res.json({ message: "Category deleted" });
     } catch (err) {
-        res.status(500).json({ error: err });
+        res.status(500).json({ error: "Server error" });
     }
 };
