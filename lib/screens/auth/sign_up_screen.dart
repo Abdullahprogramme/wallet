@@ -40,7 +40,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) return;
 
-    setState(() => _loading = true);
+    if (mounted) setState(() => _loading = true);
     final auth = Provider.of<AuthProvider>(context, listen: false);
     try {
       final success = await auth.signUp(
@@ -49,14 +49,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
         passController.text,
       );
       if (success) {
-        Navigator.pushReplacementNamed(context, '/home');
+        if (mounted) Navigator.pushReplacementNamed(context, '/home');
       } else {
         _showError('Could not create account. Email may already be in use.');
       }
     } catch (e) {
       _showError('Sign up failed. Please try again.');
     } finally {
-      if (mounted) setState(() => _loading = false);
+      if (mounted && _loading) setState(() => _loading = false);
     }
   }
 
@@ -124,6 +124,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         controller: nameController,
                         textCapitalization: TextCapitalization.words,
                         textInputAction: TextInputAction.next,
+                        enabled: !_loading,
                         decoration: const InputDecoration(
                           hintText: 'Enter your full name',
                           prefixIcon: Icon(Icons.person_outline),
@@ -142,6 +143,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         controller: emailController,
                         keyboardType: TextInputType.emailAddress,
                         textInputAction: TextInputAction.next,
+                        enabled: !_loading,
                         decoration: const InputDecoration(
                           hintText: 'Enter your email',
                           prefixIcon: Icon(Icons.email_outlined),
@@ -164,6 +166,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         obscureText: _obscurePassword,
                         textInputAction: TextInputAction.done,
                         onFieldSubmitted: (_) => _submit(),
+                        enabled: !_loading,
                         decoration: InputDecoration(
                           hintText: 'Create a password',
                           prefixIcon: const Icon(Icons.lock_outline),
@@ -172,7 +175,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               _obscurePassword ? Icons.visibility_off_outlined : Icons.visibility_outlined,
                               color: AppColors.iconColor,
                             ),
-                            onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                            onPressed: _loading ? null : () => setState(() => _obscurePassword = !_obscurePassword),
                           ),
                         ),
                         validator: (v) {

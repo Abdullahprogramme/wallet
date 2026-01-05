@@ -10,7 +10,7 @@ class AuthService {
         Uri.parse('$baseUrl/login'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'email': email, 'password': password}),
-      ).timeout(const Duration(seconds: 60));
+      ).timeout(const Duration(seconds: 15));
 
       print('[AUTH] Sign-in response status: ${resp.statusCode}');
       print('[AUTH] Sign-in response body: ${resp.body}');
@@ -40,7 +40,7 @@ class AuthService {
         Uri.parse('$baseUrl/register'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'name': name, 'email': email, 'password': password}),
-      ).timeout(const Duration(seconds: 60));
+      ).timeout(const Duration(seconds: 15));
       print('[AUTH] Sign-up response status: ${resp.statusCode}');
       print('[AUTH] Sign-up response body: ${resp.body}');
 

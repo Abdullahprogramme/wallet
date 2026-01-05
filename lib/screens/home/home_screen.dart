@@ -154,7 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final initials = _getAvatarInitials(displayName);
     final totalBalance = _getTotalBalance();
 
-    return Scaffold(
+      return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(
@@ -280,7 +280,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        'Rs. ${totalBalance.toStringAsFixed(2)}',
+                        'PKR ${totalBalance.toStringAsFixed(2)}',
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 36,
@@ -404,7 +404,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             style: AppTextStyles.bodyLarge.copyWith(fontWeight: FontWeight.w600),
                           ),
                           subtitle: Text(
-                            'Rs. ${balance.toStringAsFixed(2)}',
+                            'PKR ${balance.toStringAsFixed(2)}',
                             style: TextStyle(
                               color: balance >= 0 ? AppColors.success : AppColors.error,
                               fontWeight: FontWeight.w500,

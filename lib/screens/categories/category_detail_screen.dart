@@ -63,7 +63,18 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
           decoration: const InputDecoration(
             hintText: 'Enter amount',
-            prefixIcon: Icon(Icons.attach_money_rounded),
+            prefixIcon: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 12.0),
+              child: Text(
+                'PKR',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  color: Color(0xFF2E7D6B), // Match AppColors.primary
+                ),
+              ),
+            ),
+            prefixIconConstraints: BoxConstraints(minWidth: 0, minHeight: 0),
           ),
         ),
         actions: [
@@ -156,7 +167,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        'Rs. ${_balance.toStringAsFixed(2)}',
+                        'PKR ${_balance.toStringAsFixed(2)}',
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 40,
@@ -289,7 +300,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                             style: AppTextStyles.bodySmall,
                           ),
                           trailing: Text(
-                            '${isAdd ? '+' : '-'}Rs. ${amount.toStringAsFixed(2)}',
+                            '${isAdd ? '+' : '-'}PKR ${amount.toStringAsFixed(2)}',
                             style: TextStyle(
                               color: isAdd ? AppColors.success : AppColors.error,
                               fontWeight: FontWeight.bold,

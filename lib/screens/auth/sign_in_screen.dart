@@ -38,19 +38,19 @@ class _SignInScreenState extends State<SignInScreen> {
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) return;
 
-    setState(() => _loading = true);
+    if (mounted) setState(() => _loading = true);
     final auth = Provider.of<AuthProvider>(context, listen: false);
     try {
       final success = await auth.signIn(emailController.text.trim(), passController.text);
       if (success) {
-        Navigator.pushReplacementNamed(context, '/home');
+        if (mounted) Navigator.pushReplacementNamed(context, '/home');
       } else {
         _showError('Invalid email or password. Please try again.');
       }
     } catch (e) {
       _showError('Connection error. Please check your internet.');
     } finally {
-      if (mounted) setState(() => _loading = false);
+      if (mounted && _loading) setState(() => _loading = false);
     }
   }
 
@@ -122,6 +122,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         controller: emailController,
                         keyboardType: TextInputType.emailAddress,
                         textInputAction: TextInputAction.next,
+                        enabled: !_loading,
                         decoration: const InputDecoration(
                           hintText: 'Enter your email',
                           prefixIcon: Icon(Icons.email_outlined),
@@ -144,6 +145,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         obscureText: _obscurePassword,
                         textInputAction: TextInputAction.done,
                         onFieldSubmitted: (_) => _submit(),
+                        enabled: !_loading,
                         decoration: InputDecoration(
                           hintText: 'Enter your password',
                           prefixIcon: const Icon(Icons.lock_outline),
@@ -152,7 +154,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               _obscurePassword ? Icons.visibility_off_outlined : Icons.visibility_outlined,
                               color: AppColors.iconColor,
                             ),
-                            onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                            onPressed: _loading ? null : () => setState(() => _obscurePassword = !_obscurePassword),
                           ),
                         ),
                         validator: (v) {
