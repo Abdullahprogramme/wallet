@@ -22,7 +22,7 @@ export const addMoney = async (req: AuthRequest, res: Response) => {
 
         res.json({ category, transaction: tx });
     } catch (err) {
-        res.status(500).json({ error: err });
+        res.status(500).json({ error: "Server error" });
     }
 };
 
@@ -45,7 +45,7 @@ export const subtractMoney = async (req: AuthRequest, res: Response) => {
 
         res.json({ category, transaction: tx });
     } catch (err) {
-        res.status(500).json({ error: err });
+        res.status(500).json({ error: "Server error" });
     }
 };
 
@@ -58,6 +58,6 @@ export const getTransactions = async (req: AuthRequest, res: Response) => {
 
         res.json(tx);
     } catch (err) {
-        res.status(500).json({ error: err });
+        res.status(500).json({ error: "Server error" });
     }
 };
